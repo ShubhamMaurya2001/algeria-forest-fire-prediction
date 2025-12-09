@@ -34,31 +34,31 @@ A Flask-based machine learning web application for predicting Forest Fire Weathe
 
 ### Steps
 
-1. **Clone the repository** (includes LFS files):
+1. **Clone the repository**:
 ```bash
 git clone https://github.com/ShubhamMaurya2001/ml-lifecycle.git
 cd ml-lifecycle
 ```
 
-2. **Install Git LFS** (if not already installed):
+2. **Install dependencies**:
 ```bash
-git lfs install
-git lfs pull  # Download large files tracked by Git LFS
+pip install -r requirements.txt
+```
+Required packages: `flask`, `streamlit`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`, `shap`, `joblib`
+
+3. **Run the Streamlit application** (Recommended):
+```bash
+streamlit run streamlit_app.py
 ```
 
-3. **Install dependencies**:
-```bash
-pip install -r ../requirements.txt
-```
-Required packages: `flask`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`, `shap`, `joblib`
-
-4. **Run the Flask application**:
+   OR **Run the Flask application**:
 ```bash
 python application.py
 ```
 
-5. **Access the web interface**:
-Open your browser and navigate to `http://localhost:5000`
+4. **Access the web interface**:
+- **Streamlit**: Open your browser and navigate to `http://localhost:8501`
+- **Flask**: Open your browser and navigate to `http://localhost:5000`
 
 ## Usage
 
@@ -92,6 +92,7 @@ Open your browser and navigate to `http://localhost:5000`
 - **Features**: 9 meteorological and fire-index inputs
 - **Target**: Forest Fire Weather Index (FWI)
 - **Dataset**: Algerian forest fires (cleaned)
+- **Data Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Algerian+Forest+Fires+Dataset) - Algerian Forest Fires Dataset
 
 ## SHAP Explainability
 
@@ -123,36 +124,49 @@ The SHAP (SHapley Additive exPlanations) module provides model transparency:
 
 ## Notes & Large Files
 
-### Git LFS (Large File Storage)
-- Model files (`*.pkl`) and datasets (`*.csv`) are tracked using **Git LFS**
-- When cloning, ensure `git lfs install` is run first
-- Files are stored efficiently on GitHub without bloating the repository
+### Dataset Attribution
+- **Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Algerian+Forest+Fires+Dataset)
+- **Citation**: Sidi Mohammed Tahir, Abdelaziz Ramdane-Cherif
+- **Description**: Real forest fire data from Bejaia and Sidi Bel-Abbes regions in Algeria (2012)
+- **Files Included**: 
+  - `Algerian_forest_fires_cleaned.csv` - Cleaned dataset for training/testing
+  - `Algerian_forest_fires_dataset_UPDATE.csv` - Original dataset
 
-### Local Development
-- The scaler and model are loaded from the `Models/` folder at runtime
-- Ensure `Models/ridge_model.pkl` and `Models/scaler.pkl` exist
-- For large-scale deployments, consider MLflow for model versioning or Docker containerization
+### Model Files
+- **ridge_model.pkl**: Pre-trained Ridge Regression model
+- **scaler.pkl**: StandardScaler for feature normalization
+- Both files are tracked in this repository for easy deployment
 
-### Troubleshooting
-- **"Models not found" error**: Ensure `git lfs pull` was executed after cloning
-- **SHAP computation slow**: This is normal for first run; subsequent calls are faster
-- **Flask port already in use**: Change `app.run(host="0.0.0.0", port=5001)` in `application.py`
+## Deployment
+
+### Streamlit Cloud (Recommended - FREE)
+1. Push your code to GitHub (already done!)
+2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
+3. Click "New app" → Select repo `ml-lifecycle`, branch `main`, file `streamlit_app.py`
+4. Your app will be live in 2-3 minutes at: `https://ml-lifecycle.streamlit.app`
+
+### Flask on Render (FREE)
+1. Create account on [Render](https://render.com)
+2. Create new Web Service, connect GitHub repo
+3. Set build command: `pip install -r requirements.txt`
+4. Set start command: `python application.py`
 
 ## Project Timeline
 
-1. **Data Preparation**: Cleaned Algerian forest fire dataset
+1. **Data Preparation**: Cleaned Algerian forest fire dataset from UCI
 2. **Model Training**: Ridge Regression with StandardScaler normalization (see `ridge_and_lasso_regression.ipynb`)
-3. **Web Development**: Flask app with prediction and explanation routes
+3. **Web Development**: Both Flask and Streamlit applications
 4. **Explainability**: SHAP integration for model interpretability
+5. **Deployment**: Ready for cloud deployment on Streamlit Cloud or Render
 
 ## Future Enhancements
 
 - Add more ML algorithms (XGBoost, Random Forest) for comparison
 - Implement user authentication and prediction history
-- Deploy to cloud (AWS, Heroku, GCP)
 - Add batch prediction capability
 - Create REST API documentation (Swagger/OpenAPI)
-- Build mobile app interface
+- Add mobile app interface
+- Implement database for storing predictions
 
 ## Author
 
