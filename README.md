@@ -27,35 +27,64 @@ A Flask-based machine learning web application for predicting Forest Fire Weathe
 
 ## Installation
 
-1. Clone the repository:
+### Prerequisites
+- Python 3.10 or higher
+- Git and Git LFS (for model/data files)
+- pip or conda package manager
+
+### Steps
+
+1. **Clone the repository** (includes LFS files):
 ```bash
 git clone https://github.com/ShubhamMaurya2001/ml-lifecycle.git
 cd ml-lifecycle
 ```
 
-2. Install dependencies:
+2. **Install Git LFS** (if not already installed):
+```bash
+git lfs install
+git lfs pull  # Download large files tracked by Git LFS
+```
+
+3. **Install dependencies**:
 ```bash
 pip install -r ../requirements.txt
 ```
-(Ensure `shap`, `flask`, `scikit-learn`, `pandas`, `numpy`, `matplotlib` are installed)
+Required packages: `flask`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`, `shap`, `joblib`
 
-3. Run the Flask application:
+4. **Run the Flask application**:
 ```bash
 python application.py
 ```
 
-4. Open your browser and navigate to:
-```
-http://localhost:5000
-```
+5. **Access the web interface**:
+Open your browser and navigate to `http://localhost:5000`
 
 ## Usage
 
-1. **Home Page** (`/`): Overview and navigation
-2. **Prediction Page** (`/predictdata`):
-   - Enter weather conditions (Temperature, RH, Ws, Rain) and FWI codes (FFMC, DMC, DC, ISI, BUI)
-   - Click "🔮 Predict FWI" to see the predicted value
-   - Click "🧭 Explain (SHAP)" to see feature importance visualization
+### Web Interface Navigation
+
+1. **Home Page** (`/`): 
+   - Overview of the ML Lifecycle project
+   - Links to prediction and explanation pages
+
+2. **Prediction & Explanation Page** (`/predictdata`):
+   - **Weather Conditions Section**:
+     - Temperature (°C): Current air temperature
+     - Relative Humidity (%): Moisture in air (0-100)
+     - Wind Speed (km/h): Speed of wind
+     - Rain (mm): Recent rainfall amount
+   
+   - **Fire Weather Index Codes Section**:
+     - **FFMC** (Fine Fuel Moisture Code): Indicates moisture of litter and other cured fine fuels
+     - **DMC** (Duff Moisture Code): Represents moisture in decomposing organic matter
+     - **DC** (Drought Code): Reflects moisture in deep organic layers
+     - **ISI** (Initial Spread Index): Describes rate of fire spread potential
+     - **BUI** (Buildup Index): Combines DMC and DC to indicate fuel accumulation
+   
+   - **Action Buttons**:
+     - "🔮 Predict FWI": Calculates Forest Fire Weather Index (0-high risk)
+     - "🧭 Explain (SHAP)": Shows which features influence the prediction most
 
 ## Model Details
 
@@ -66,10 +95,21 @@ http://localhost:5000
 
 ## SHAP Explainability
 
-The SHAP summary plot shows:
-- Which features have the most impact on FWI predictions
-- The direction and magnitude of each feature's contribution
-- Helps understand model behavior and build trust in predictions
+The SHAP (SHapley Additive exPlanations) module provides model transparency:
+
+### Features
+- **Summary Plot**: Bar chart showing average feature importance across all predictions
+- **Feature Attribution**: Quantifies how each input contributes to the FWI prediction
+- **Model Trustworthiness**: Understand which weather conditions drive fire risk assessments
+
+### How to Use
+1. Fill in the 9 input fields on the prediction page
+2. Click "🧭 Explain (SHAP)" button
+3. View the SHAP summary plot showing feature impact rankings
+
+### Interpretation
+- Longer bars = stronger influence on predictions
+- Features at the top are most important for decision-making
 
 ## Requirements
 
@@ -81,11 +121,38 @@ The SHAP summary plot shows:
 - shap
 - joblib
 
-## Notes
+## Notes & Large Files
 
-- Large model files (`.pkl`) are excluded from version control
-- The scaler and model are loaded from the `Models/` folder
-- For large-scale deployments, consider using MLflow or containerizing with Docker
+### Git LFS (Large File Storage)
+- Model files (`*.pkl`) and datasets (`*.csv`) are tracked using **Git LFS**
+- When cloning, ensure `git lfs install` is run first
+- Files are stored efficiently on GitHub without bloating the repository
+
+### Local Development
+- The scaler and model are loaded from the `Models/` folder at runtime
+- Ensure `Models/ridge_model.pkl` and `Models/scaler.pkl` exist
+- For large-scale deployments, consider MLflow for model versioning or Docker containerization
+
+### Troubleshooting
+- **"Models not found" error**: Ensure `git lfs pull` was executed after cloning
+- **SHAP computation slow**: This is normal for first run; subsequent calls are faster
+- **Flask port already in use**: Change `app.run(host="0.0.0.0", port=5001)` in `application.py`
+
+## Project Timeline
+
+1. **Data Preparation**: Cleaned Algerian forest fire dataset
+2. **Model Training**: Ridge Regression with StandardScaler normalization (see `ridge_and_lasso_regression.ipynb`)
+3. **Web Development**: Flask app with prediction and explanation routes
+4. **Explainability**: SHAP integration for model interpretability
+
+## Future Enhancements
+
+- Add more ML algorithms (XGBoost, Random Forest) for comparison
+- Implement user authentication and prediction history
+- Deploy to cloud (AWS, Heroku, GCP)
+- Add batch prediction capability
+- Create REST API documentation (Swagger/OpenAPI)
+- Build mobile app interface
 
 ## Author
 
