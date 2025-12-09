@@ -4,6 +4,8 @@ A machine learning web application for predicting Forest Fire Weather Index (FWI
 
 🌐 **[Live Demo](https://ml-lifecycle-ridge.streamlit.app/)** - Try the app online now!
 
+📦 **GitHub**: [algeria-forest-fire-prediction](https://github.com/ShubhamMaurya2001/algeria-forest-fire-prediction)
+
 ## Features
 
 - **Real-time Prediction**: Predict FWI values based on 9 input features (Temperature, RH, Ws, Rain, FFMC, DMC, DC, ISI, BUI)
@@ -38,8 +40,8 @@ A machine learning web application for predicting Forest Fire Weather Index (FWI
 
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/ShubhamMaurya2001/ml-lifecycle.git
-cd ml-lifecycle
+git clone https://github.com/ShubhamMaurya2001/algeria-forest-fire-prediction.git
+cd algeria-forest-fire-prediction
 ```
 
 2. **Install dependencies**:
