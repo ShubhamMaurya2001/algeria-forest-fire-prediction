@@ -1,27 +1,30 @@
 # ML Lifecycle - Algerian Forest Fire Prediction
 
-A Flask-based machine learning web application for predicting Forest Fire Weather Index (FWI) using ridge regression and providing SHAP-based model explainability.
+A machine learning web application for predicting Forest Fire Weather Index (FWI) using ridge regression and providing SHAP-based model explainability.
+
+🌐 **[Live Demo](https://ml-lifecycle-ridge.streamlit.app/)** - Try the app online now!
 
 ## Features
 
-- **Prediction API**: Predict FWI values based on 9 input features (Temperature, RH, Ws, Rain, FFMC, DMC, DC, ISI, BUI)
-- **SHAP Explainability**: Generate feature importance summaries to understand model predictions
-- **Interactive Web UI**: User-friendly interface built with Flask and HTML/CSS
+- **Real-time Prediction**: Predict FWI values based on 9 input features (Temperature, RH, Ws, Rain, FFMC, DMC, DC, ISI, BUI)
+- **SHAP Explainability**: Generate feature importance charts to understand model predictions
+- **Interactive Web UI**: User-friendly interface built with Streamlit
 - **Pre-trained Model**: Ridge regression model trained on Algerian forest fires dataset
+- **Data Visualization**: Explore correlations and feature distributions
 
 ## Project Structure
 
 ```
-├── application.py                      # Flask app with prediction & SHAP routes
+├── streamlit_app.py                    # Main Streamlit application
+├── application.py                      # Flask app (alternative)
 ├── explainability.py                   # SHAP computation utilities
 ├── ridge_and_lasso_regression.ipynb    # Model training & analysis notebook
-├── Templates/
-│   ├── index.html                      # Home page
-│   └── home.html                       # Prediction & explanation form
+├── Templates/                          # Flask templates (optional)
 ├── Models/
 │   ├── ridge_model.pkl                 # Pre-trained ridge regression model
 │   └── scaler.pkl                      # StandardScaler for feature normalization
 ├── Algerian_forest_fires_cleaned.csv   # Dataset used for training
+├── requirements.txt                    # Python dependencies
 └── README.md                           # This file
 ```
 
@@ -29,10 +32,9 @@ A Flask-based machine learning web application for predicting Forest Fire Weathe
 
 ### Prerequisites
 - Python 3.10 or higher
-- Git and Git LFS (for model/data files)
 - pip or conda package manager
 
-### Steps
+### Quick Start (5 minutes)
 
 1. **Clone the repository**:
 ```bash
@@ -44,78 +46,77 @@ cd ml-lifecycle
 ```bash
 pip install -r requirements.txt
 ```
-Required packages: `flask`, `streamlit`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`, `shap`, `joblib`
 
-3. **Run the Streamlit application** (Recommended):
+3. **Run the Streamlit application**:
 ```bash
 streamlit run streamlit_app.py
 ```
 
-   OR **Run the Flask application**:
-```bash
-python application.py
+4. **Open in browser**:
+```
+http://localhost:8501
 ```
 
-4. **Access the web interface**:
-- **Streamlit**: Open your browser and navigate to `http://localhost:8501`
-- **Flask**: Open your browser and navigate to `http://localhost:5000`
+**That's it!** Your app is now running locally.
 
 ## Usage
 
-### Web Interface Navigation
+### 🏠 Home Page
+- Project overview
+- Feature explanations
+- Quick links
 
-1. **Home Page** (`/`): 
-   - Overview of the ML Lifecycle project
-   - Links to prediction and explanation pages
+### 🔮 Make Prediction
+- Adjust 9 input parameters with sliders
+- Get instant FWI prediction
+- View color-coded risk levels:
+  - 🟢 Low Risk (0-5)
+  - 🟡 Moderate Risk (5-15)
+  - 🟠 High Risk (15-30)
+  - 🔴 Very High Risk (30+)
+- Click "Generate SHAP Explanation" to see which features matter most
 
-2. **Prediction & Explanation Page** (`/predictdata`):
-   - **Weather Conditions Section**:
-     - Temperature (°C): Current air temperature
-     - Relative Humidity (%): Moisture in air (0-100)
-     - Wind Speed (km/h): Speed of wind
-     - Rain (mm): Recent rainfall amount
-   
-   - **Fire Weather Index Codes Section**:
-     - **FFMC** (Fine Fuel Moisture Code): Indicates moisture of litter and other cured fine fuels
-     - **DMC** (Duff Moisture Code): Represents moisture in decomposing organic matter
-     - **DC** (Drought Code): Reflects moisture in deep organic layers
-     - **ISI** (Initial Spread Index): Describes rate of fire spread potential
-     - **BUI** (Buildup Index): Combines DMC and DC to indicate fuel accumulation
-   
-   - **Action Buttons**:
-     - "🔮 Predict FWI": Calculates Forest Fire Weather Index (0-high risk)
-     - "🧭 Explain (SHAP)": Shows which features influence the prediction most
+### 📊 Dataset Overview
+- View dataset statistics
+- Explore data distributions
+- See sample data
+
+### 📈 Feature Insights
+- Correlation heatmap
+- Feature importance analysis
+- Identify top predictors
+
+### ℹ️ About
+- Project information
+- Technology stack
+- GitHub link
 
 ## Model Details
 
-- **Algorithm**: Ridge Regression (linear model)
-- **Features**: 9 meteorological and fire-index inputs
-- **Target**: Forest Fire Weather Index (FWI)
-- **Dataset**: Algerian forest fires (cleaned)
-- **Data Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Algerian+Forest+Fires+Dataset) - Algerian Forest Fires Dataset
+- **Algorithm**: Ridge Regression
+- **Input Features**: 9 (Temperature, Humidity, Wind Speed, Rain, FFMC, DMC, DC, ISI, BUI)
+- **Prediction Target**: Forest Fire Weather Index (FWI)
+- **Dataset**: Algerian Forest Fires (UCI Machine Learning Repository)
+- **Explainability**: SHAP (shows which features affect predictions)
 
 ## SHAP Explainability
 
-The SHAP (SHapley Additive exPlanations) module provides model transparency:
+**What is SHAP?** It explains which features (Temperature, Humidity, etc.) have the most impact on the prediction.
 
-### Features
-- **Summary Plot**: Bar chart showing average feature importance across all predictions
-- **Feature Attribution**: Quantifies how each input contributes to the FWI prediction
-- **Model Trustworthiness**: Understand which weather conditions drive fire risk assessments
+**Why it matters:**
+- Understand why the model made a prediction
+- Build trust in the model
+- Identify key fire risk factors
 
-### How to Use
-1. Fill in the 9 input fields on the prediction page
-2. Click "🧭 Explain (SHAP)" button
-3. View the SHAP summary plot showing feature impact rankings
-
-### Interpretation
-- Longer bars = stronger influence on predictions
-- Features at the top are most important for decision-making
+**How to use:**
+1. Enter your input values
+2. Click "Generate SHAP Explanation"
+3. See a chart showing feature importance
 
 ## Requirements
 
 - Python 3.10+
-- Flask
+- Streamlit
 - scikit-learn
 - pandas, numpy
 - matplotlib, seaborn
@@ -124,49 +125,44 @@ The SHAP (SHapley Additive exPlanations) module provides model transparency:
 
 ## Notes & Large Files
 
-### Dataset Attribution
+### Dataset
 - **Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Algerian+Forest+Fires+Dataset)
 - **Citation**: Sidi Mohammed Tahir, Abdelaziz Ramdane-Cherif
-- **Description**: Real forest fire data from Bejaia and Sidi Bel-Abbes regions in Algeria (2012)
-- **Files Included**: 
-  - `Algerian_forest_fires_cleaned.csv` - Cleaned dataset for training/testing
-  - `Algerian_forest_fires_dataset_UPDATE.csv` - Original dataset
+- **Location**: Bejaia and Sidi Bel-Abbes regions, Algeria (2012)
 
 ### Model Files
-- **ridge_model.pkl**: Pre-trained Ridge Regression model
-- **scaler.pkl**: StandardScaler for feature normalization
-- Both files are tracked in this repository for easy deployment
+- Pre-trained Ridge Regression model and scaler included in the repository
+- No need to train the model yourself!
 
 ## Deployment
 
-### Streamlit Cloud (Recommended - FREE)
-1. Push your code to GitHub (already done!)
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Click "New app" → Select repo `ml-lifecycle`, branch `main`, file `streamlit_app.py`
-4. Your app will be live in 2-3 minutes at: `https://ml-lifecycle.streamlit.app`
+**Already deployed!** 🚀 Try the live app here: https://ml-lifecycle-ridge.streamlit.app/
 
-### Flask on Render (FREE)
-1. Create account on [Render](https://render.com)
-2. Create new Web Service, connect GitHub repo
-3. Set build command: `pip install -r requirements.txt`
-4. Set start command: `python application.py`
+### Deploy Your Own Copy (Free)
+
+1. Fork this repository on GitHub
+2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
+3. Click "New app"
+4. Select your forked repository and `streamlit_app.py`
+5. Click "Deploy"
+
+Your app will be live in 2-3 minutes!
 
 ## Project Timeline
 
-1. **Data Preparation**: Cleaned Algerian forest fire dataset from UCI
-2. **Model Training**: Ridge Regression with StandardScaler normalization (see `ridge_and_lasso_regression.ipynb`)
-3. **Web Development**: Both Flask and Streamlit applications
-4. **Explainability**: SHAP integration for model interpretability
-5. **Deployment**: Ready for cloud deployment on Streamlit Cloud or Render
+1. Data collection from UCI
+2. Ridge Regression model training
+3. Streamlit web application
+4. SHAP explainability integration
+5. Deployed on Streamlit Cloud
 
-## Future Enhancements
+## Future Ideas
 
-- Add more ML algorithms (XGBoost, Random Forest) for comparison
-- Implement user authentication and prediction history
-- Add batch prediction capability
-- Create REST API documentation (Swagger/OpenAPI)
-- Add mobile app interface
-- Implement database for storing predictions
+- Add more ML models (Random Forest, XGBoost)
+- User login and prediction history
+- Batch predictions (upload CSV)
+- Mobile app
+- Database to store predictions
 
 ## Author
 
